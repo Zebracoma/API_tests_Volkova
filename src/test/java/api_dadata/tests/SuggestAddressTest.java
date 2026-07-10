@@ -6,21 +6,25 @@ import api_dadata.dto.SuggestResponse;
 import api_dadata.service.DaDataService;
 import api_dadata.spec.Specifications;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 
 public class SuggestAddressTest{
 
-    private final String URL = "https://suggestions.dadata.ru/suggestions/api/4_1/rs";
+    private static final String URL = "https://suggestions.dadata.ru/suggestions/api/4_1/rs";
 
-    @Test
-    public void checkAddressSuggestionTest() {
-
+    @BeforeAll
+    public static void setup(){
         Specifications.installSpecification(
                 Specifications.reuestSpec(URL),
                 Specifications.responseSpecOK200()
         );
+    }
+    
+    @Test
+    public void checkAddressSuggestionTest() {
 
         SuggestRequest requestBody = new SuggestRequest(TestData.VALID_SEARCH_QUERY);
 
