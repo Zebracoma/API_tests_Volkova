@@ -1,5 +1,6 @@
 package api_dadata.tests;
 
+import api_dadata.config.TestData;
 import api_dadata.dto.SuggestRequest;
 import api_dadata.dto.SuggestResponse;
 import api_dadata.spec.Specifications;
@@ -20,8 +21,7 @@ public class SuggestAddressTest{
                 Specifications.responseSpecOK200()
         );
 
-        String queryText = "москва хабаровская";
-        SuggestRequest requestBody = new SuggestRequest(queryText);
+        SuggestRequest requestBody = new SuggestRequest(TestData.VALID_SEARCH_QUERY);
 
         SuggestResponse response = given()
                 .body(requestBody)
@@ -37,7 +37,7 @@ public class SuggestAddressTest{
         String actualStreet = response.getSuggestions().get(0).getData().getStreet();
 
         // Проверка корректной работы алгоритма
-        Assertions.assertEquals("Москва", actualCity, "Город определен неверно");
-        Assertions.assertEquals("Хабаровская", actualStreet, "Улица определена неверно");
+        Assertions.assertEquals(TestData.EXPECTED_CITY, actualCity, "Город определен неверно");
+        Assertions.assertEquals(TestData.EXPECTED_STREET, actualStreet, "Улица определена неверно");
     }
 }

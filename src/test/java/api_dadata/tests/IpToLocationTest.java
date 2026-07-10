@@ -1,5 +1,6 @@
 package api_dadata.tests;
 
+import api_dadata.config.TestData;
 import api_dadata.dto.IpResponse;
 import api_dadata.spec.Specifications;
 import org.junit.jupiter.api.Assertions;
@@ -14,8 +15,7 @@ public class IpToLocationTest {
     public void checkCityByIpTest(){
 
         Specifications.installSpecification(Specifications.reuestSpec(URL), Specifications.responseSpecOK200());
-        String testIp = "46.226.227.20";
-        String expectedCity = "Москва";
+        String testIp = TestData.VALID_IP;
 
         IpResponse resp = given()
                 .queryParam("ip", testIp)
@@ -28,7 +28,7 @@ public class IpToLocationTest {
 
         String actualCity = resp.getLocation().getData().getCity();
 
-        Assertions.assertEquals(expectedCity, actualCity, "Город определен не верно!");
+        Assertions.assertEquals(TestData.EXPECTED_CITY, actualCity, "Город определен не верно!");
 
     }
 }

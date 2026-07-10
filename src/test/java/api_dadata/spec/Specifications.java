@@ -9,7 +9,7 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 
 public class Specifications {
-    private static final String API_TOKEN = "bb5fc0863d2f8be4cfe14f9fa520ba8f37e27198";
+    private static final String API_TOKEN = System.getenv("DADATA_TOKEN");
 
     //Спецификация для отправки запроса
     public static RequestSpecification reuestSpec (String url){
