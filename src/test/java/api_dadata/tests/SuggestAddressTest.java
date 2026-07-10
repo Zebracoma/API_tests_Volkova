@@ -3,6 +3,7 @@ package api_dadata.tests;
 import api_dadata.config.TestData;
 import api_dadata.dto.SuggestRequest;
 import api_dadata.dto.SuggestResponse;
+import api_dadata.service.DaDataService;
 import api_dadata.spec.Specifications;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -23,12 +24,7 @@ public class SuggestAddressTest{
 
         SuggestRequest requestBody = new SuggestRequest(TestData.VALID_SEARCH_QUERY);
 
-        SuggestResponse response = given()
-                .body(requestBody)
-                .when()
-                .post("/suggest/address")
-                .then().log().all()
-                .extract().as(SuggestResponse.class);
+        SuggestResponse response = DaDataService.getAddressSuggestions(requestBody);
 
         // Проверка - список подсказок не пустой - нашлось хоть какое-то совпадение
         Assertions.assertFalse(response.getSuggestions().isEmpty(), "Сервер вернул пустой список подсказок!");

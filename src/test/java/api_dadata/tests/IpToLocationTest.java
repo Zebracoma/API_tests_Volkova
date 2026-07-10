@@ -2,10 +2,12 @@ package api_dadata.tests;
 
 import api_dadata.config.TestData;
 import api_dadata.dto.IpResponse;
+import api_dadata.service.DaDataService;
 import api_dadata.spec.Specifications;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static api_dadata.service.DaDataService.getIpResponce;
 import static io.restassured.RestAssured.given;
 
 public class IpToLocationTest {
@@ -17,12 +19,7 @@ public class IpToLocationTest {
         Specifications.installSpecification(Specifications.reuestSpec(URL), Specifications.responseSpecOK200());
         String testIp = TestData.VALID_IP;
 
-        IpResponse resp = given()
-                .queryParam("ip", testIp)
-                .when()
-                .get("/iplocate/address")
-                .then().log().all()
-                .extract().as(IpResponse.class);
+        IpResponse resp = DaDataService.getIpResponce();
 
         Assertions.assertNotNull(resp.getLocation(), "Локация не найдена (NULL)");
 
