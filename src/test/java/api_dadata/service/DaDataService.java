@@ -1,5 +1,6 @@
 package api_dadata.service;
 
+import api_dadata.config.Endpoints;
 import api_dadata.config.TestData;
 import api_dadata.dto.IpResponse;
 import api_dadata.dto.SuggestRequest;
@@ -12,7 +13,7 @@ public class DaDataService {
         return given()
                 .body(requestBody)
                 .when()
-                .post("/suggest/address")
+                .post(Endpoints.SUGGEST_ADDRESS.getPath())
                 .then().log().all()
                 .extract().as(SuggestResponse.class);
     }
@@ -21,7 +22,7 @@ public class DaDataService {
         return given()
                 .queryParam("ip", TestData.VALID_IP)
                 .when()
-                .get("/iplocate/address")
+                .get(Endpoints.IP_LOCATE.getPath())
                 .then().log().all()
                 .extract().as(IpResponse.class);
     }
