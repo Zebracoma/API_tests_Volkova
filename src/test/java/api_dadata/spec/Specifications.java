@@ -17,7 +17,7 @@ public class Specifications {
                 .setBaseUri(TestData.BASE_URL)
                 .setContentType(ContentType.JSON)
                 .setAccept(ContentType.JSON)
-                // Используем заголовок, т.к. DaData требует 'Token', а не 'Bearer'
+                // Использован заголовок, т.к. DaData требует 'Token', а не 'Bearer'
                 .addHeader("Authorization", "Token " + API_TOKEN)
                 .build();
     }

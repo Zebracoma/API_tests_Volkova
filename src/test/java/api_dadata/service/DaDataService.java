@@ -2,6 +2,7 @@ package api_dadata.service;
 
 import api_dadata.config.Endpoints;
 import api_dadata.config.TestData;
+import api_dadata.dto.FioResponse;
 import api_dadata.dto.IpResponse;
 import api_dadata.dto.SuggestRequest;
 import api_dadata.dto.SuggestResponse;
@@ -77,5 +78,59 @@ public class DaDataService {
                 .get(Endpoints.IP_LOCATE.getPath())
                 .then().log().all()
                 .extract().response(); // Возвращаем сырой ответ без проверок статуса
+    }
+
+    // Метод для успешного поиска ФИО
+    public static FioResponse getFioSuggestions(SuggestRequest requestBody) {
+        return given()
+                .spec(Specifications.requestSpec())
+                .body(requestBody)
+                .when()
+                .post(Endpoints.SUGGEST_FIO.getPath())
+                .then().log().all()
+                .spec(Specifications.responseSpec200())
+                .extract().as(FioResponse.class);
+    }
+
+    // Сырой метод для негативных сценариев ФИО
+    public static Response getFioErrorResponse(Object requestBody, String token) {
+        var request = given()
+                .baseUri(TestData.BASE_URL)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .body(requestBody);
+
+        if (token != null) {
+            request.header("Authorization", "Token " + token);
+        }
+
+        return request
+                .when()
+                .post(Endpoints.SUGGEST_FIO.getPath())
+                .then().log().all()
+                .extract().response();
+    }
+
+    // Метод для проверки ошибки 405 (Неверный метод HTTP)
+    public static Response getFioWithWrongHttpMethod(String token) {
+        return given()
+                .baseUri(TestData.BASE_URL)
+                .header("Authorization", "Token " + token)
+                .when()
+                // Эндпоинт ФИО ждет POST, а высылается GET
+                .get(Endpoints.SUGGEST_FIO.getPath())
+                .then().log().all()
+                .extract().response();
+    }
+
+    // Метод для проверки несуществующего эндпоинта (Ожидаем 404)
+    public static Response getNotFoundResponse() {
+        return given()
+                .spec(Specifications.requestSpec())
+                .body("{}")
+                .when()
+                .post("/suggest/enotiki")
+                .then().log().all()
+                .extract().response();
     }
 }
