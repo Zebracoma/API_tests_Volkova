@@ -8,9 +8,10 @@ import java.util.List;
 public class SuggestResponse {
     private List<AddressLocation> suggestions;
 
-    public SuggestResponse() {}
+    public SuggestResponse() {
+    }
 
-    public List<AddressLocation> getSuggestions(){
+    public List<AddressLocation> getSuggestions() {
         return suggestions;
     }
 }

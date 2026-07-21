@@ -17,4 +17,5 @@ public class AddressLocation {
     public AddressData getData() {
         return data;
     }
+
 }

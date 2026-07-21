@@ -5,10 +5,12 @@ import api_dadata.dto.SuggestResponse;
 import api_dadata.service.DaDataService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.parallel.ResourceLock;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class SuggestAddressTest{
+@ResourceLock("DaData_API")
+class SuggestAddressTest {
 
     @DisplayName("Проверка подсказок адреса по текстовому запросу")
     @ParameterizedTest
@@ -18,8 +20,7 @@ public class SuggestAddressTest{
             "санкт-петербург невский, Санкт-Петербург, Невский",
             "казань баумана, Казань, Баумана"
     })
-    public void checkAddressSuggestionTest(String query, String expectedCity, String expectedStreet) {
-
+    void checkAddressSuggestionTest(String query, String expectedCity, String expectedStreet) {
         SuggestRequest requestBody = new SuggestRequest(query);
 
         SuggestResponse response = DaDataService.getAddressSuggestions(requestBody);

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class SuggestFioTest {
+class SuggestFioTest {
 
     @DisplayName("Проверка разбивки ФИО и определения пола")
     @ParameterizedTest
@@ -17,7 +17,7 @@ public class SuggestFioTest {
             "мария волкова, Мария, Волкова, FEMALE",
             "александр пушкин, Александр, Пушкин, MALE"
     })
-    public void checkFioSuggestionTest(String query, String expectedName, String expectedSecondPart, String expectedGender) {
+    void checkFioSuggestionTest(String query, String expectedName, String expectedSecondPart, String expectedGender) {
 
         SuggestRequest requestBody = new SuggestRequest(query);
         FioResponse response = DaDataService.getFioSuggestions(requestBody);

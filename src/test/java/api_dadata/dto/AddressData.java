@@ -7,6 +7,7 @@ public class AddressData {
     private String country;
     private String region;
     private String city;
+    private String street;
 
     public AddressData() {
     }
@@ -21,5 +22,9 @@ public class AddressData {
 
     public String getCity() {
         return city;
+    }
+
+    public String getStreet() {
+        return street;
     }
 }

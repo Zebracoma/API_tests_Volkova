@@ -1,4 +1,4 @@
-package api_dadata.config;
+package api_dadata.util;
 
 import java.util.ResourceBundle;
 

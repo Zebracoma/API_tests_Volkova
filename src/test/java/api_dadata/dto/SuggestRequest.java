@@ -1,11 +1,13 @@
 package api_dadata.dto;
 
 public class SuggestRequest {
-    private String query;
+    private final String query;
 
     public SuggestRequest(String query) {
         this.query = query;
     }
 
-    public String getQuery() { return query; }
+    public String getQuery() {
+        return query;
+    }
 }

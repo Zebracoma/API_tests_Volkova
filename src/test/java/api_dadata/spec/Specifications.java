@@ -1,27 +1,33 @@
 package api_dadata.spec;
 
+import api_dadata.config.TestData;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
-import api_dadata.config.TestData;
 
 public class Specifications {
 
     private static final String API_TOKEN = System.getenv("DADATA_TOKEN");
 
-    // Единая спецификация для всех запросов
-    public static RequestSpecification requestSpec() {
-        return new RequestSpecBuilder()
+    public static RequestSpecification requestSpec(String token) {
+        RequestSpecBuilder builder = new RequestSpecBuilder()
                 .setBaseUri(TestData.BASE_URL)
                 .setContentType(ContentType.JSON)
-                .setAccept(ContentType.JSON)
-                // Использован заголовок, т.к. DaData требует 'Token', а не 'Bearer'
-                .addHeader("Authorization", "Token " + API_TOKEN)
-                .build();
+                .setAccept(ContentType.JSON);
+
+        if (token != null) {
+            builder.addHeader("Authorization", "Token " + token);
+        }
+
+        return builder.build();
     }
-    // Спецификация для успешного ответа
+
+    public static RequestSpecification requestSpec() {
+        return requestSpec(API_TOKEN);
+    }
+
     public static ResponseSpecification responseSpec200() {
         return new ResponseSpecBuilder()
                 .expectStatusCode(200)
